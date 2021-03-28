@@ -64,6 +64,36 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-DFS与BFS算法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/03/28/DFS%E4%B8%8EBFS%E7%AE%97%E6%B3%95/" class="article-date">
+  <time datetime="2021-03-28T06:23:22.748Z" itemprop="datePublished">2021-03-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="DFS与BFS算法"><a href="#DFS与BFS算法" class="headerlink" title="DFS与BFS算法"></a>DFS与BFS算法</h2><p>DFS算法的思想是：一直往前走，直到找到解或者走不下去时开始回溯。<br>使用栈保存未被检测的结点，结点按照深度优先的次序被访问并依次被压入栈中，并以相反的次序出栈进行新的检测。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">DFS(dep,...)<span class="comment">//dep表示当前DFS的深度</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span>(找到解 || 走不下去)&#123;</span><br><span class="line">		...</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	枚举下一种情况;</span><br><span class="line">	DFS（dep+<span class="number">1</span>,...）;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>BFS算法的思想是：使用队列先进先出的原则实现。使用队列保存未被检测的结点。结点按照宽度优先的次序被访问和进出队列。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">初始化队列Q;</span><br><span class="line">Q = &#123;起点s&#125;;  <span class="comment">//标记s为已访问</span></span><br><span class="line"><span class="keyword">while</span>（Q非空）&#123;</span><br><span class="line">	取Q队首元素u;<span class="comment">//u出队</span></span><br><span class="line">	<span class="keyword">if</span>(u == 目标状态)&#123;</span><br><span class="line">	...</span><br><span class="line">	&#125;</span><br><span class="line">	所有与u相邻且未被访问的点进入队列;</span><br><span class="line">	标记u为已访问;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/03/28/DFS%E4%B8%8EBFS%E7%AE%97%E6%B3%95/" data-id="ckmss1kso0000l4tmh4kn7o5n" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-轻重搭配" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2021/03/23/%E8%BD%BB%E9%87%8D%E6%90%AD%E9%85%8D/" class="article-date">
@@ -341,33 +371,6 @@
 
 
   
-    <article id="post-周报（3.1）" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2021/02/04/%E5%91%A8%E6%8A%A5%EF%BC%883.1%EF%BC%89/" class="article-date">
-  <time datetime="2021-02-04T13:02:26.058Z" itemprop="datePublished">2021-02-04</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="周报（3-1）"><a href="#周报（3-1）" class="headerlink" title="周报（3.1）"></a>周报（3.1）</h2><p>1.31<br>继续学习java的流程控制。<br>补充总结已写的算法题。<br>2.1<br>学习java循环部分。<br>开始了解算法结构。<br>2.2<br>总结java流程控制部分，练习相关习题。<br>思考尝试vj题目B、N。<br>2.3<br>学习java的while与do…while语句。<br>总结流程控制的内容。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2021/02/04/%E5%91%A8%E6%8A%A5%EF%BC%883.1%EF%BC%89/" data-id="ckkqvff800000q8tm3yxj2546" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -404,6 +407,10 @@
       <ul>
         
           <li>
+            <a href="/2021/03/28/DFS%E4%B8%8EBFS%E7%AE%97%E6%B3%95/">(no title)</a>
+          </li>
+        
+          <li>
             <a href="/2021/03/23/%E8%BD%BB%E9%87%8D%E6%90%AD%E9%85%8D/">(no title)</a>
           </li>
         
@@ -417,10 +424,6 @@
         
           <li>
             <a href="/2021/03/16/Crossing%20River/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2021/03/09/%E8%80%83%E6%A0%B8%E9%A2%98%E6%80%BB%E7%BB%93/">(no title)</a>
           </li>
         
       </ul>
