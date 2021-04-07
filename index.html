@@ -64,6 +64,39 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-放苹果" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/04/07/%E6%94%BE%E8%8B%B9%E6%9E%9C/" class="article-date">
+  <time datetime="2021-04-07T13:33:02.935Z" itemprop="datePublished">2021-04-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="放苹果"><a href="#放苹果" class="headerlink" title="放苹果"></a>放苹果</h2><p>题目：</p>
+<blockquote>
+<p>小蒜想知道把 M 个同样的苹果放在 N 个同样的盘子里，允许有的盘子空着不放，共有多少种不同的分法？（用 K表示）5，1，1和 1，5，1是同一种分法。<br>输入格式<br>第一行是测试数据的数目<br>t(0≤t≤20)。<br>以下每行均包含两个整数 M和 N，以空格分开。1≤M,N≤10。<br>输出格式<br>对输入的每组数据 M 和 N，用一行输出相应的 K。<br>Sample Input<br>1<br>7 3<br>Sample Output<br>8</p>
+</blockquote>
+<p>解题思路：设f(m,n)为m个苹果，n个盘子的放法数目，则先对n作讨论，<br>当n&gt;m：则必定有n-m个盘子永远空着，去掉它们对摆放苹果方法数目不产生影响。即 if(n&gt;m) f(m,n) = f(m,m)。<br>当n &lt;= m:不同的放法可以分成两类：含有0的方案数，不含有0的方案数。<br>含有0的方案数，即有至少一个盘子空着，即相当于 f(m,n)=f(m,n-1);<br>不含有0的方案数，即所有的盘子都有苹果，相当于可以从每个盘子中拿掉一个苹果，不影响不同放法的数目，即 f(m,n)=f(m-n,n).而总的放苹果的放法数目等于两者的和，即 f(m,n)=f(m,n-1)+f(m-n,n)<br>递归出口条件说明：<br>当n=1时，所有苹果都必须放在一个盘子里，所以返回1；<br>当m==0(没有苹果可放)时，定义为1种放法；</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fun</span><span class="params">(<span class="keyword">int</span> m,<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(m==<span class="number">0</span>||n==<span class="number">1</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">if</span>(m &lt;n)</span><br><span class="line">		<span class="keyword">return</span> fun(m,m);</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">return</span> fun(m,n<span class="number">-1</span>)+fun(m-n,n);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> t,m,n;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;t);</span><br><span class="line">	<span class="keyword">int</span> a[<span class="number">20</span>];</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;t; i++) &#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;m,&amp;n);</span><br><span class="line">		a[i] = fun(m,n);</span><br><span class="line">	&#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;t;j++)&#123;</span><br><span class="line">    	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,a[j]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/04/07/%E6%94%BE%E8%8B%B9%E6%9E%9C/" data-id="ckn7ik0si0000fktm1leb2wwo" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-java二维数组模拟酒店管理系统" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2021/04/06/java%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E6%A8%A1%E6%8B%9F%E9%85%92%E5%BA%97%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/" class="article-date">
@@ -338,43 +371,11 @@
 
 
   
-    <article id="post-二分查找（一）" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2021/03/09/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%EF%BC%88%E4%B8%80%EF%BC%89/" class="article-date">
-  <time datetime="2021-03-09T12:36:45.927Z" itemprop="datePublished">2021-03-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="二分查找（一）"><a href="#二分查找（一）" class="headerlink" title="二分查找（一）"></a>二分查找（一）</h2><p>蒜头君手上有个长度为 n的数组 A。由于数组实在太大了，所以蒜头君也不知道数组里面有什么数字，所以蒜头君会经常询问整数 x 是否在数组 A中。</p>
-<p>输入格式<br>第一行输入两个整数 n 和 m，分别表示数组的长度和查询的次数。接下来一行有 n个整数 ai。<br>接下来 m行，每行有 1个整数 x，表示蒜头君询问的整数。<br>输出格式<br>对于每次查询，如果可以找到，输出”YES”，否则输出”NO”。<br><img src="https://img-blog.csdnimg.cn/20210309193806189.png" alt="在这里插入图片描述"></p>
-<p>Sample Input<br>10 5<br>1 1 1 2 3 5 5 7 8 9<br>0<br>1<br>4<br>9<br>10<br>Sample Output<br>NO<br>YES<br>NO<br>YES<br>NO</p>
-<p>思路：该题目考察二分查找法的运用，在网上看了很多二分法结题代码，尝试之后发现了更为简单便捷的方法。直接定义一个以x数据范围为大小的数组，清零之后，以输入要查找的的数字为下标，令该元素++，最终若该元素值为0则输出“NO”，否则输出“YES”。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX 1000000</span></span><br><span class="line"><span class="keyword">int</span> nums[MAX]; </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n,m,a,x,i;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;n);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;m);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;a);</span><br><span class="line">		nums[a]++;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;m;i++)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;x);</span><br><span class="line">		<span class="keyword">if</span>(nums[x] == <span class="number">0</span>)&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;NO\n&quot;</span>);</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;YES\n&quot;</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2021/03/09/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%EF%BC%88%E4%B8%80%EF%BC%89/" data-id="ckm2033lp00003ktm3mtmhoad" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
   </nav>
 
 </section>
@@ -406,6 +407,10 @@
       <ul>
         
           <li>
+            <a href="/2021/04/07/%E6%94%BE%E8%8B%B9%E6%9E%9C/">(no title)</a>
+          </li>
+        
+          <li>
             <a href="/2021/04/06/java%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E6%A8%A1%E6%8B%9F%E9%85%92%E5%BA%97%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/">(no title)</a>
           </li>
         
@@ -419,10 +424,6 @@
         
           <li>
             <a href="/2021/03/28/DFS%E4%B8%8EBFS%E7%AE%97%E6%B3%95/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2021/03/23/%E8%BD%BB%E9%87%8D%E6%90%AD%E9%85%8D/">(no title)</a>
           </li>
         
       </ul>
