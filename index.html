@@ -64,6 +64,45 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-非常男女" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/04/07/%E9%9D%9E%E5%B8%B8%E7%94%B7%E5%A5%B3/" class="article-date">
+  <time datetime="2021-04-07T13:56:49.881Z" itemprop="datePublished">2021-04-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="非常男女"><a href="#非常男女" class="headerlink" title="非常男女"></a>非常男女</h2><p>题目：</p>
+<blockquote>
+<p>近来，蒜头君致力于研究班上同学的配对问题（别想太多，仅是舞伴），通过各种推理和实验，他掌握了大量的实战经验。例如，据他观察，身高相近的人似乎比较合得来。<br>万圣节来临之际，蒜头君准备在学校策划一次大型的“非常男女”配对活动。对于这次活动的参与者，蒜头君有自己独特的选择方式。他希望能选择男女人数相等且身高都很接近的一些人。这种选择方式实现起来很简单。他让学校的所有人按照身高排成一排，然后从中选出连续的若干个人，使得这些人中男女人数相等。为了使活动更热闹，蒜头君当然希望他能选出的人越多越好。请编写程序告诉他，他最多可以选出多少人来。<br>输入格式<br>第一行有一个正整数<br>n(1≤n≤105)，代表学校的人数。<br>第二行有 n 个用空格隔开的数，这些数只能是 0 或 1，其中，0代表一个女生，1代表一个男生。<br>输出格式<br>输出一个非负整数，这个数表示在输入数据中最长的一段男女人数相等的连续子序列长度。</p>
+</blockquote>
+<blockquote>
+<p>Sample Input<br>9<br>0 1 0 0 0 1 1 0 0</p>
+</blockquote>
+<blockquote>
+<p>Sample Output<br>6</p>
+</blockquote>
+<p>解题思路：在原数组中，让男生女生分别为1和-1，这样如果男女生相等，则合为0。再开一个同样大小的数组用来存放前缀和，遍历这个数组。 使用两层for循环记录相邻两次前缀和相同的位置，相减即为符合条件的子序列。不断更新所得到的长度，最终最长长度即为结果。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> S = <span class="number">1e5</span>+<span class="number">5</span>;</span><br><span class="line"><span class="keyword">int</span> n,a[S],b[S]; </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;n);</span><br><span class="line">	<span class="keyword">int</span> i,j,k;</span><br><span class="line">	b[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;a[i]);</span><br><span class="line">		<span class="keyword">if</span>(a[i] == <span class="number">0</span>)&#123;</span><br><span class="line">			a[i] = <span class="number">-1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		b[i] = b[i<span class="number">-1</span>] + a[i]; </span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(j=<span class="number">1</span>;j&lt;=n;j++)&#123;</span><br><span class="line">		<span class="keyword">for</span>(k=<span class="number">0</span>;k&lt;j;k++)&#123;</span><br><span class="line">			<span class="keyword">if</span>(b[j] == b[k])&#123;</span><br><span class="line">				<span class="keyword">if</span>(j-k &gt; sum)&#123;</span><br><span class="line">					sum = j-k;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,sum);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/04/07/%E9%9D%9E%E5%B8%B8%E7%94%B7%E5%A5%B3/" data-id="ckn91aczm0000igtmhzxnefjg" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-放苹果" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2021/04/07/%E6%94%BE%E8%8B%B9%E6%9E%9C/" class="article-date">
@@ -344,33 +383,6 @@
 
 
   
-    <article id="post-考核题总结" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2021/03/09/%E8%80%83%E6%A0%B8%E9%A2%98%E6%80%BB%E7%BB%93/" class="article-date">
-  <time datetime="2021-03-09T13:48:16.060Z" itemprop="datePublished">2021-03-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="考核题总结"><a href="#考核题总结" class="headerlink" title="考核题总结"></a>考核题总结</h2><p>一。<br>1.ADH.<br>汉字可以作为标识符。<br>6.A.<br>java中只允许的单一继承（即一个子类只能有一个父类）。<br>为了解决单一继承的不足，给父类加以接口来提供其他类使用。<br>二。<br>9.有的类定义时可以不定义构造函数，所以构造函数不是必须的（×）。<br>没有写构造方法的类系统会默认定义一个无参数构造方法。<br>10.在实例方法或构造器中，this用来引用当前对象，通常使用this可引用当亲对象的任何成员（√）。<br>三。<br>3.在方法重载中，若实参为“NULL”，则采取“从下而上”的方法调用函数。(Object &gt; String = Integer = Double)若重载的方法形参级别相同，则抛出异常。<br>4.getClass()方法用来得到【正在执行】的对象的类Class后，可以通过Class获取这个类中的相关属性和方法，因此this.getclass()与super.getclass()是相同的。getName()方法用来返回提供者的名称。getClass().getName()可以得到当前对象的类的名称。<br>5.  System.out.println(12 - 11.9 == 0.1);该语句为false。试一下 2.0-0.5这样的，算出来就是精确的了，因为0.5是2的-1次方。0.75这样的 2(-1)+2(-2)都是可以精确表示的。编译器在处理一个数据时，当一种类型数据无法用二进制数精确表示时，只能按照一种规则去找一个数代替(比如取最接近这个数的二进制数代替）。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2021/03/09/%E8%80%83%E6%A0%B8%E9%A2%98%E6%80%BB%E7%BB%93/" data-id="ckm22ma9y00007gtm09gzfhnv" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -407,6 +419,10 @@
       <ul>
         
           <li>
+            <a href="/2021/04/07/%E9%9D%9E%E5%B8%B8%E7%94%B7%E5%A5%B3/">(no title)</a>
+          </li>
+        
+          <li>
             <a href="/2021/04/07/%E6%94%BE%E8%8B%B9%E6%9E%9C/">(no title)</a>
           </li>
         
@@ -420,10 +436,6 @@
         
           <li>
             <a href="/2021/03/29/%E5%88%A9%E6%B6%A6/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2021/03/28/DFS%E4%B8%8EBFS%E7%AE%97%E6%B3%95/">(no title)</a>
           </li>
         
       </ul>
