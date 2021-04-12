@@ -64,6 +64,43 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-红与黑" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/04/12/%E7%BA%A2%E4%B8%8E%E9%BB%91/" class="article-date">
+  <time datetime="2021-04-12T15:25:16.151Z" itemprop="datePublished">2021-04-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="红与黑"><a href="#红与黑" class="headerlink" title="红与黑"></a>红与黑</h2><p>题目：</p>
+<p>蒜厂有一间长方形的房子，地上铺了红色、黑色两种颜色的正方形瓷砖。你站在其中一块黑色的瓷砖上，只能向相邻的黑色瓷砖移动。<br>请写一个程序，计算你总共能够到达多少块黑色的瓷砖。<br>输入格式<br>第一行是两个整数 W 和 H，分别表示 x 方向和 y方向瓷砖的数量。W和 H都不超过 20。在接下来的 H 行中，每行包括 W个字符。每个字符表示一块瓷砖的颜色，规则如下<br>1）’.’：黑色的瓷砖；<br>2）’#’：白色的瓷砖；<br>3）‘@’：黑色的瓷砖，并且你站在这块瓷砖上。该字符在每个数据集合中唯一出现一次。<br>输出格式<br>输出一行，显示你从初始位置出发能到达的瓷砖数(记数时包括初始位置的瓷砖)。</p>
+<blockquote>
+<p>Sample Input<br>6 9<br>….#.<br>…..#<br>……<br>……<br>……<br>……<br>……<br>#@…#<br>.#..#.</p>
+</blockquote>
+<blockquote>
+<p>Sample Output<br>45</p>
+</blockquote>
+<p>解题思路：和油田问题差不多，只是搜索的方向少了四个，使用dfs和bfs都可以，同样搜索过的元素也需要改变，此题目中即将黑色的瓷砖”.”改为白色的瓷砖“#”,初始位置的“@”同样也需要改为“#”。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="keyword">char</span> <span class="built_in">map</span>[<span class="number">22</span>][<span class="number">22</span>];</span><br><span class="line"><span class="keyword">int</span> m,n,sum=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> dir[<span class="number">4</span>][<span class="number">2</span>] = &#123;<span class="number">1</span>,<span class="number">0</span>,<span class="number">-1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">-1</span>&#125; ;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> i,<span class="keyword">int</span> j)</span> </span>&#123;</span><br><span class="line">	sum++;</span><br><span class="line">	<span class="built_in">map</span>[i][j] = <span class="string">&#x27;#&#x27;</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">0</span>; k&lt;<span class="number">4</span>; k++) &#123;</span><br><span class="line">		<span class="keyword">int</span> x = i + dir[k][<span class="number">0</span>];</span><br><span class="line">		<span class="keyword">int</span> y = j + dir[k][<span class="number">1</span>];</span><br><span class="line">		<span class="keyword">if</span>(<span class="built_in">map</span>[x][y] == <span class="string">&#x27;.&#x27;</span> &amp;&amp; x&gt;=<span class="number">0</span> &amp;&amp; x&lt;m &amp;&amp; y&gt;=<span class="number">0</span> &amp;&amp; y&lt;n ) &#123;</span><br><span class="line">			dfs(x,y);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;n,&amp;m);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;m; i++) &#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>,&amp;<span class="built_in">map</span>[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> x,y;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;m; i++) &#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;n; j++) &#123;</span><br><span class="line">			<span class="keyword">if</span>(<span class="built_in">map</span>[i][j] == <span class="string">&#x27;@&#x27;</span>) &#123;</span><br><span class="line">				x = i;</span><br><span class="line">				y = j;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	dfs(x,y);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,sum);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/04/12/%E7%BA%A2%E4%B8%8E%E9%BB%91/" data-id="ckner03fo0000q4tm77vrby3y" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-非常男女" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2021/04/07/%E9%9D%9E%E5%B8%B8%E7%94%B7%E5%A5%B3/" class="article-date">
@@ -354,35 +391,6 @@
 
 
   
-    <article id="post-Crossing River" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2021/03/16/Crossing%20River/" class="article-date">
-  <time datetime="2021-03-16T11:50:41.830Z" itemprop="datePublished">2021-03-16</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Crossing-River"><a href="#Crossing-River" class="headerlink" title="Crossing River"></a>Crossing River</h2><p>A group of N people wishes to go across a river with only one boat, which can at most carry two persons. Therefore some sort of shuttle arrangement must be arranged in order to row the boat back and forth so that all people may cross. Each person has a different rowing speed; the speed of a couple is determined by the speed of the slower one. Your job is to determine a strategy that minimizes the time for these people to get across.<br>Input<br>The first line of the input contains a single integer T (1 &lt;= T &lt;= 20), the number of test cases. Then T cases follow. The first line of each case contains N, and the second line contains N integers giving the time for each people to cross the river. Each case is preceded by a blank line. There won’t be more than 1000 people and nobody takes more than 100 seconds to cross.<br>Output<br>For each test case, print a line containing the total number of seconds required for all the N people to cross the river.<br>Sample Input<br>1<br>4<br>1 2 5 10<br>Sample Output<br>17<br>题目大意：<br>一群人希望只用一艘船过河，最多只能载两个人。因此，必须安排某种穿梭方式来回划船，以便所有人都能通过。每个人都有不同的划船速度，一组两人划船的速度取决于较慢那个人的速度。你的工作是制定一个策略，尽量减少这些人的过河时间。<br>这道题属于贪心算法的考察，设总时间为time，将所有人的时间升序排序。只有一人时，time = a[0],有两人时，time = a[1],有三个人时，time = a[0] + a[1] + a[2]。当人数大于等于4时，需要分两种情况进行讨论：例如：设最快两人与最慢两人的时间从小到大依次为a[0],a[1],a[i-1],a[i]。<br>算法①：最快的依次送其他三人。time = a[1] + a[0] + a[i-1] + a[0] + a[i] = a[0] * 2 + a[1] + a[i-1] + a[i]。<br>算法②：最快的送次快的，最快的回来，次慢的送最慢的，次快的回来，最后最快的送次快的。time = a[1] + a[0] + a[i] + a[1] +a[1] = a[0] + 3<em>a[1] + a[i]。<br>由此可见，两种方法time差值为：a[0] + a[i-1] - 2</em>a[1].该值为正，取算法②，否则取算法①。<br>AC代码：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sort</span><span class="params">(<span class="keyword">int</span> * a,<span class="keyword">int</span> len)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i,j,t;</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;len; i++) &#123;</span><br><span class="line">		<span class="keyword">for</span>(j=<span class="number">0</span>; j&lt;len-i<span class="number">-1</span>; j++) &#123;</span><br><span class="line">			<span class="keyword">if</span>(a[j] &gt; a[j+<span class="number">1</span>]) &#123;</span><br><span class="line">				t = a[j];</span><br><span class="line">				a[j] = a[j+<span class="number">1</span>];</span><br><span class="line">				a[j+<span class="number">1</span>] = t;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> t,n,time;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;t);</span><br><span class="line">	<span class="keyword">int</span> a[<span class="number">1003</span>] = &#123;&#125;;</span><br><span class="line">	<span class="keyword">while</span>(t--) &#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;n);</span><br><span class="line">		<span class="keyword">if</span>(n == <span class="number">0</span>)&#123;</span><br><span class="line">			<span class="keyword">continue</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; i++) &#123;</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;a[i]);</span><br><span class="line">		&#125;</span><br><span class="line">		sort(a,n);</span><br><span class="line">		time = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">if</span>(n&lt;=<span class="number">3</span>) &#123;</span><br><span class="line">			<span class="keyword">switch</span>(n) &#123;</span><br><span class="line">				<span class="keyword">case</span> <span class="number">1</span>: &#123;</span><br><span class="line">					time = a[<span class="number">0</span>];</span><br><span class="line">					<span class="keyword">break</span>;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">case</span> <span class="number">2</span>: &#123;</span><br><span class="line">					time = a[<span class="number">1</span>];</span><br><span class="line">					<span class="keyword">break</span>;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">case</span> <span class="number">3</span>: &#123;</span><br><span class="line">					time = a[<span class="number">0</span>] + a[<span class="number">1</span>] +a[<span class="number">2</span>];</span><br><span class="line">					<span class="keyword">break</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> i=n<span class="number">-1</span>; i&gt;<span class="number">0</span>; i-=<span class="number">2</span>) &#123;</span><br><span class="line">				<span class="keyword">if</span>(i&gt;=<span class="number">3</span>) &#123;</span><br><span class="line">					<span class="keyword">if</span>(a[<span class="number">0</span>]+a[i<span class="number">-1</span>] &gt;= a[<span class="number">1</span>]*<span class="number">2</span>) &#123;</span><br><span class="line">						time += a[<span class="number">1</span>]*<span class="number">2</span> + a[<span class="number">0</span>] + a[i];</span><br><span class="line">					&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">						time += <span class="number">2</span>*a[<span class="number">0</span>]+a[i<span class="number">-1</span>] + a[i];</span><br><span class="line">					&#125;<span class="comment">//每一次加的目的只是为了送走最慢的两个人，即不用考虑将a[0]与a[1]送走，因此每次少加一个a[1]。</span></span><br><span class="line">				&#125;<span class="keyword">else</span> <span class="keyword">if</span>(i == <span class="number">2</span>)&#123;</span><br><span class="line">					time += a[<span class="number">0</span>] + a[<span class="number">1</span>] + a[<span class="number">2</span>];</span><br><span class="line">				&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">					time += a[<span class="number">1</span>];</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,time);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2021/03/16/Crossing%20River/" data-id="ckmbywc3e0000sstm4pwteszw" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -419,6 +427,10 @@
       <ul>
         
           <li>
+            <a href="/2021/04/12/%E7%BA%A2%E4%B8%8E%E9%BB%91/">(no title)</a>
+          </li>
+        
+          <li>
             <a href="/2021/04/07/%E9%9D%9E%E5%B8%B8%E7%94%B7%E5%A5%B3/">(no title)</a>
           </li>
         
@@ -432,10 +444,6 @@
         
           <li>
             <a href="/2021/03/29/%E5%8F%96%E7%9F%B3%E5%AD%90%E6%B8%B8%E6%88%8F/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2021/03/29/%E5%88%A9%E6%B6%A6/">(no title)</a>
           </li>
         
       </ul>
