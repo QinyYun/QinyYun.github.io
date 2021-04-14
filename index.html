@@ -64,6 +64,42 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Max Sum" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/04/14/Max%20Sum/" class="article-date">
+  <time datetime="2021-04-14T15:15:34.033Z" itemprop="datePublished">2021-04-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Max-Sum"><a href="#Max-Sum" class="headerlink" title="Max Sum"></a>Max Sum</h2><p>题目：<br>Given a sequence a[1],a[2],a[3]……a[n], your job is to calculate the max sum of a sub-sequence. For example, given (6,-1,5,4,-7), the max sum in this sequence is 6 + (-1) + 5 + 4 = 14.<br>输入格式<br>The first line of the input contains an integer T(1&lt;=T&lt;=20) which means the number of test cases. Then T lines follow, each line starts with a number N(1&lt;=N&lt;=100000), then N integers followed(all the integers are between -1000 and 1000).<br>输出格式<br>For each test case, you should output two lines. The first line is “Case #:”, # means the number of the test case. The second line contains three integers, the Max Sum in the sequence, the start position of the sub-sequence, the end position of the sub-sequence. If there are more than one result, output the first one. Output a blank line between two cases.</p>
+<blockquote>
+<p>Sample Input<br>2<br>5 6 -1 5 4 -7<br>7 0 6 -1 1 -6 7 -5</p>
+</blockquote>
+<blockquote>
+<p>Sample Output<br>Case 1:<br>14 1 4<br>Case 2:<br>7 1 6</p>
+</blockquote>
+<p>解题思路：<br>输入一串整数，记一个最大和ans,使其不断与前i个数的和比较若dp[i]&gt;ans并记录开始与结束的位置,则使ans=dp[i];若dp[i]&lt;0,则dp[i]=0并记录此时的位置为起始位置;此后不断循环最终得到所求结果。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;  </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXSIZE  100005</span></span><br><span class="line"><span class="keyword">int</span> a[MAXSIZE],dp;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i,n;</span><br><span class="line">	<span class="keyword">int</span> count,cou;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;count);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span>(cou = <span class="number">1</span>;cou&lt;=count;cou++) &#123;</span><br><span class="line">		<span class="keyword">int</span> ans = <span class="number">-1000</span>,begin=<span class="number">0</span>,end=<span class="number">0</span>,k=<span class="number">1</span>;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;n);</span><br><span class="line">		a[MAXSIZE] = &#123;&#125;;</span><br><span class="line">		dp = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;n; i++) &#123;</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;a[i]);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;n; i++) &#123;</span><br><span class="line">			dp += a[i];</span><br><span class="line">			<span class="keyword">if</span>(dp &gt; ans)&#123;</span><br><span class="line">				ans = dp;</span><br><span class="line">				begin = k;</span><br><span class="line">				end = i + <span class="number">1</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			</span><br><span class="line">			<span class="keyword">if</span>(dp&lt;<span class="number">0</span>)&#123;</span><br><span class="line">				dp = <span class="number">0</span>;</span><br><span class="line">				k = i + <span class="number">2</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;Case %d:\n%d %d %d\n&quot;</span>,cou,ans,begin,end);</span><br><span class="line">		<span class="keyword">if</span>(cou != count) <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>); </span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/04/14/Max%20Sum/" data-id="cknhlk3f70000qwtm02c41xfs" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-红与黑" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2021/04/12/%E7%BA%A2%E4%B8%8E%E9%BB%91/" class="article-date">
@@ -361,36 +397,6 @@
 
 
   
-    <article id="post-Oil Deposits" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2021/03/16/Oil%20Deposits/" class="article-date">
-  <time datetime="2021-03-16T12:02:28.756Z" itemprop="datePublished">2021-03-16</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Oil-Deposits"><a href="#Oil-Deposits" class="headerlink" title="Oil Deposits"></a>Oil Deposits</h2><p>The GeoSurvComp geologic survey company is responsible for detecting underground oil deposits. GeoSurvComp works with one large rectangular region of land at a time, and creates a grid that divides the land into numerous square plots. It then analyzes each plot separately, using sensing equipment to determine whether or not the plot contains oil. A plot containing oil is called a pocket. If two pockets are adjacent, then they are part of the same oil deposit. Oil deposits can be quite large and may contain numerous pockets. Your job is to determine how many different oil deposits are contained in a grid.<br>Input<br>The input file contains one or more grids. Each grid begins with a line containing m and n, the number of rows and columns in the grid, separated by a single space. If m = 0 it signals the end of the input; otherwise 1 &lt;= m &lt;= 100 and 1 &lt;= n &lt;= 100. Following this are m lines of n characters each (not counting the end-of-line characters). Each character corresponds to one plot, and is either <code>*&#39;, representing the absence of oil, or </code>@’, representing an oil pocket.<br>Output<br>For each grid, output the number of distinct oil deposits. Two different pockets are part of the same oil deposit if they are adjacent horizontally, vertically, or diagonally. An oil deposit will not contain more than 100 pockets.<br>问题描述：<br>GeoSurvComp地质调查公司负责检测地下油藏。GeoSurvComp一次与一个大的矩形区域一起工作，并创建一个网格，将网格划分为多个方块。然后分别分析每个地块，使用传感设备确定该地块是否含有油。含油的情节被称为口袋。如果两个口袋相邻，则它们是同一个油藏的一部分。油藏可能相当大，可能含有大量的口袋。你的工作是确定网格中包含多少个不同的油藏。<br>Input：<br>输入文件包含一个或多个网格。每个网格以含有m和n的行开始，网格中的行和列的数量由一个空格分隔。如果m = 0，则表示输入结束; 否则1 &lt;= m &lt;= 100且1 &lt;= n &lt;= 100.之后是每行n个字符的m行（不包括行尾字符）。每个字符对应一个图，并且代表没有油的‘<em>’或代表油袋的‘@’。<br>Output：<br>对于每个电网，输出不同油量的数量。如果两个不同的口袋是水平，垂直或对角相邻的，则它们是同一个油藏的一部分。一个油藏不会超过100个口袋。<br>Sample Input<br>1 1<br>*<br>3 5<br>*@</em>@*<br><strong>@</strong><br><em>@</em>@*<br>1 8<br>@@<strong>*<em>@</em><br>5 5<br>****@<br><em>@@</em>@<br>*@</strong>@<br>@@@<em>@<br>@@**@<br>0 0<br>Sample Output<br>0<br>1<br>2<br>2<br>思路分析：该题目主要用到贪心算法+DFS深度搜索。查找到‘@’的位置，找到一个，油田+1，对找到的‘@’的四周再进行DFS查找，在这里要注意，当油田附近搜索到新的油田时，在主函数之中已经对油田个数+1，因此在之后的搜索中，应将该油田“@”变为“</em>”，防止重复计算。</p>
-<p>AC代码：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="keyword">char</span> <span class="built_in">map</span>[<span class="number">102</span>][<span class="number">102</span>];</span><br><span class="line"><span class="keyword">int</span> m,n;</span><br><span class="line"><span class="keyword">int</span> dir[<span class="number">8</span>][<span class="number">2</span>] = &#123;<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">-1</span>,<span class="number">0</span>,<span class="number">-1</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">-1</span>,<span class="number">0</span>,<span class="number">-1</span>,<span class="number">1</span>,<span class="number">-1</span>,<span class="number">-1</span>&#125; ;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> i,<span class="keyword">int</span> j)</span> </span>&#123;</span><br><span class="line">	<span class="built_in">map</span>[i][j] = <span class="string">&#x27;*&#x27;</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">0</span>; k&lt;<span class="number">8</span>; k++) &#123;</span><br><span class="line">		<span class="keyword">int</span> x = i + dir[k][<span class="number">0</span>];</span><br><span class="line">		<span class="keyword">int</span> y = j + dir[k][<span class="number">1</span>];</span><br><span class="line">		<span class="keyword">if</span>(<span class="built_in">map</span>[x][y] == <span class="string">&#x27;@&#x27;</span> &amp;&amp; x&gt;=<span class="number">0</span> &amp;&amp; x&lt;m &amp;&amp; y&gt;=<span class="number">0</span> &amp;&amp; y&lt;n ) &#123;</span><br><span class="line">			dfs(x,y);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">while</span>(<span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;m,&amp;n) &amp;&amp; (m!=<span class="number">0</span>||n!=<span class="number">0</span>) ) &#123;</span><br><span class="line">		getchar();</span><br><span class="line">		<span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;m; i++) &#123;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;n;j++)&#123;</span><br><span class="line">				<span class="built_in">scanf</span>(<span class="string">&quot;%c&quot;</span>,&amp;<span class="built_in">map</span>[i][j]);</span><br><span class="line">			&#125; 	</span><br><span class="line">			getchar(); </span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;m; i++) &#123;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;n; j++) &#123;</span><br><span class="line">				<span class="keyword">if</span>(<span class="built_in">map</span>[i][j] == <span class="string">&#x27;@&#x27;</span>) &#123;</span><br><span class="line">					dfs(i,j);</span><br><span class="line">					sum++;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,sum);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2021/03/16/Oil%20Deposits/" data-id="ckmbywc3z0001sstm69tw3dhi" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -427,6 +433,10 @@
       <ul>
         
           <li>
+            <a href="/2021/04/14/Max%20Sum/">(no title)</a>
+          </li>
+        
+          <li>
             <a href="/2021/04/12/%E7%BA%A2%E4%B8%8E%E9%BB%91/">(no title)</a>
           </li>
         
@@ -440,10 +450,6 @@
         
           <li>
             <a href="/2021/04/06/java%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E6%A8%A1%E6%8B%9F%E9%85%92%E5%BA%97%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2021/03/29/%E5%8F%96%E7%9F%B3%E5%AD%90%E6%B8%B8%E6%88%8F/">(no title)</a>
           </li>
         
       </ul>
