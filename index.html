@@ -64,6 +64,42 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-三值排序" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/04/18/%E4%B8%89%E5%80%BC%E6%8E%92%E5%BA%8F/" class="article-date">
+  <time datetime="2021-04-18T15:18:15.024Z" itemprop="datePublished">2021-04-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="三值排序"><a href="#三值排序" class="headerlink" title="三值排序"></a>三值排序</h2><p>题目：<br>排序是一种很频繁的计算任务。一个实际的例子是，当我们给某项竞赛的优胜者按金银铜牌排序的时候。在这个任务中可能的值只有三种1，2和3。我们用交换的方法把他排成升序的。<br>写一个程序计算出，计算出的一个包括1、2、3三种值的数字序列，排成升序所需的最少交换次数。<br>输入第1行为类别的数量N（1≤N≤1000）<br>输入第2行到第N+1行，每行包括一个数字（1或2或3）。<br>输出包含一行，为排成升序所需的最少交换次数。</p>
+<blockquote>
+<p>Sample Input<br>9<br>2<br>2<br>1<br>3<br>3<br>3<br>2<br>3<br>1</p>
+</blockquote>
+<blockquote>
+<p>Sample Output<br>4</p>
+</blockquote>
+<p>解题思路：<br>由题意得，将一个由1,2,3散乱排布组成的数列经过排序之后，分为三个区域，每个区域先后分别为1,2,3。<br>    若根据普通排序的方法，从前向后排序，则免不了把后面的2与前面3交换，之后又再次把交换后的2与更后的1交换，由此这个2则被重复交换了。<br>    为了避免这种重复交换，要确保每个数被交换之后都要到它自己的位置，因此要确定出每个数值的区域，在此处记为s1,s2,s3。<br>    交换这一动作是两个对象之间发生的，而此处有三个对象，任选两个对象，他们之中由于有第三个对象元素的存在，则它们之中非自己元素的个数并不一定相等，因此不能直接交换。<br>    因此要从这三个区域中挑出一个区域与另两个区域分离开进行操作。<br>    先挑一个区域1，计算出其中非己的元素w1，将它们分给另两个区域之中，此时那的两个区域中非己元素是相同的，记为ans2，则最终答案即为 w1 + ans2。<br>    所以此时的题目变为了求ans2:<br>    *****从1区域分别向2,3区域中交换的数字个数未知，因此不能直接求出w2。<br>    由于1区域已经排好，所以只用求2,3区域中非己元素，此时2,3区域中的非己元素只能是对方区域的元素，因此找出2区域中3的个数w2,和3区域中2的个数w3即可。<br>    那么ans2应该取w2和w3中的那一个呢：假设s2中的3较多，即 w2&gt;w3，则s1中的2比较多，若以把s2复原为目标（即令ans2 = w3），则将s1中的s2重复交换。<br>    因此只需要在w2和w3之中选出较大值作为ans即可，最终与s1相加即为最终结果。<br>    AC代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> N,a[<span class="number">1000</span>];</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;N);</span><br><span class="line">	<span class="keyword">int</span> s1=<span class="number">0</span>,s2=<span class="number">0</span>,s3=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;N;i++)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;a[i]);</span><br><span class="line">		<span class="keyword">if</span>(a[i] == <span class="number">1</span>)&#123;</span><br><span class="line">			s1++;</span><br><span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span>(a[i] == <span class="number">2</span>)&#123;</span><br><span class="line">			s2++;</span><br><span class="line">		&#125;<span class="keyword">else</span> s3++;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">int</span> w1=<span class="number">0</span>; <span class="comment">//1区域中不是1的个数 </span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;s1;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(a[i] != <span class="number">1</span>)&#123;</span><br><span class="line">			w1++;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">int</span> w2=<span class="number">0</span>; <span class="comment">//2区域中3的个数 </span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=s1;i&lt;s1+s2;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(a[i] == <span class="number">3</span>)&#123;</span><br><span class="line">			w2++;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">int</span> w3=<span class="number">0</span>; <span class="comment">//3区域中2的个数 </span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=s1+s2;i&lt;N;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(a[i] == <span class="number">2</span>)&#123;</span><br><span class="line">			w3++;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">int</span> ans2 = w2 &gt; w3 ? w2 : w3;  </span><br><span class="line">	<span class="keyword">int</span> ans = w1 + ans2;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,ans);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/04/18/%E4%B8%89%E5%80%BC%E6%8E%92%E5%BA%8F/" data-id="cknnbehbr0000kwtmgwa54ynq" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Max Sum" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2021/04/14/Max%20Sum/" class="article-date">
@@ -362,41 +398,6 @@
 
 
   
-    <article id="post-Catch That Cow" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2021/03/23/Catch%20That%20Cow/" class="article-date">
-  <time datetime="2021-03-23T12:52:12.955Z" itemprop="datePublished">2021-03-23</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="A-Catch-That-Cow"><a href="#A-Catch-That-Cow" class="headerlink" title="A - Catch That Cow"></a>A - Catch That Cow</h2><p>Farmer John has been informed of the location of a fugitive cow and wants to catch her immediately. He starts at a point N (0 ≤ N ≤ 100,000) on a number line and the cow is at a point K (0 ≤ K ≤ 100,000) on the same number line. Farmer John has two modes of transportation: walking and teleporting.</p>
-<ul>
-<li>Walking: FJ can move from any point X to the points X - 1 or X + 1 in a single minute</li>
-<li>Teleporting: FJ can move from any point X to the point 2 × X in a single minute.</li>
-</ul>
-<p>If the cow, unaware of its pursuit, does not move at all, how long does it take for Farmer John to retrieve it?<br>Input<br>Line 1: Two space-separated integers: N and K<br>Output<br>Line 1: The least amount of time, in minutes, it takes for Farmer John to catch the fugitive cow.<br>Sample Input<br>5 17<br>Sample Output<br>4<br>Hint<br>The fastest way for Farmer John to reach the fugitive cow is to move along the following path: 5-10-9-18-17, which takes 4 minutes.<br>农夫知道一头牛的位置，想要抓住它。农夫和牛都于数轴上 ，农夫起始位于点 N(0&lt;=N&lt;=100000) ，牛位于点 K(0&lt;=K&lt;=100000) 。农夫有两种移动方式： 1、从 X移动到 X-1或X+1 ，每次移动花费一分钟 2、从 X移动到 2*X ，每次移动花费一分钟 假设牛没有意识到农夫的行动，站在原地不。最少要花多少时间才能抓住牛？<br>Input<br>一行: 以空格分隔的两个字母: N 和 K<br>Output<br>一行: 农夫抓住牛需要的最少时间，单位分钟<br>Sample Input<br>5 17<br>Sample Output<br>4<br>Hint<br>农夫使用最短时间抓住牛的方案如下: 5-10-9-18-17, 需要4分钟.</p>
-<p>解题思路：该题目用BFS广度搜索+队列进行解答，BFS和DFS的区别是，DFS为深度搜索，沿一条线一直搜索，到底端时再回溯。而BFS为逐层搜索，搜索至每一次层时将该层所有元素入队，再搜索下一层。对于该题目来说，当n&gt;=k时，农夫只要一直后退就可以到达牛的位置；当n&lt;k时，要分三种情况：分别是前进一步，后退一步，和前进二倍的步数。此处运用BFS宽搜进行解决。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Node</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> state;</span><br><span class="line">	<span class="keyword">int</span> step;</span><br><span class="line">&#125; <span class="built_in">queue</span>[<span class="number">100005</span>];  <span class="comment">//结构体数组用来存放位置和步数</span></span><br><span class="line"><span class="keyword">int</span> vis[<span class="number">100005</span>];   <span class="comment">//标记是否走过</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bfs</span><span class="params">(<span class="keyword">int</span> n,<span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Node</span> <span class="title">temp</span>;</span></span><br><span class="line">	<span class="keyword">int</span> rear = <span class="number">0</span>,front = <span class="number">0</span>;</span><br><span class="line">	<span class="built_in">memset</span>(vis,<span class="number">0</span>,<span class="keyword">sizeof</span>(vis));</span><br><span class="line">	vis[n] = <span class="number">1</span>;   <span class="comment">//给农夫的起始位置标记</span></span><br><span class="line">	<span class="built_in">queue</span>[rear].state = n;</span><br><span class="line">	<span class="built_in">queue</span>[rear].step = <span class="number">0</span>;</span><br><span class="line">	rear++;    <span class="comment">//起点进入队列，队尾指针后移 </span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span>(front &lt; rear) &#123;</span><br><span class="line">		temp = <span class="built_in">queue</span>[front];</span><br><span class="line">		front++;   <span class="comment">//队首元素出队，指针后移 </span></span><br><span class="line">		<span class="keyword">if</span>(temp.state+<span class="number">1</span> &gt; <span class="number">0</span> &amp;&amp; temp.state+<span class="number">1</span> &lt; <span class="number">100005</span> &amp;&amp; !vis[temp.state+<span class="number">1</span>]) &#123;</span><br><span class="line">			<span class="built_in">queue</span>[rear].state = temp.state + <span class="number">1</span>;</span><br><span class="line">			<span class="built_in">queue</span>[rear].step = temp.step + <span class="number">1</span>;</span><br><span class="line">			rear++;</span><br><span class="line">			vis[temp.state + <span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">			<span class="keyword">if</span>(temp.state + <span class="number">1</span> == k) &#123;</span><br><span class="line">				<span class="keyword">return</span> temp.step + <span class="number">1</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(temp.state<span class="number">-1</span> &gt; <span class="number">0</span> &amp;&amp; temp.state<span class="number">-1</span> &lt; <span class="number">100005</span> &amp;&amp; !vis[temp.state<span class="number">-1</span>]) &#123;</span><br><span class="line">			<span class="built_in">queue</span>[rear].state = temp.state - <span class="number">1</span>;</span><br><span class="line">			<span class="built_in">queue</span>[rear].step = temp.step + <span class="number">1</span>;</span><br><span class="line">			rear++;</span><br><span class="line">			vis[temp.state - <span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">			<span class="keyword">if</span>(temp.state - <span class="number">1</span> == k) &#123;</span><br><span class="line">				<span class="keyword">return</span> temp.step + <span class="number">1</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(temp.state*<span class="number">2</span> &gt;<span class="number">0</span> &amp;&amp; temp.state*<span class="number">2</span> &lt; <span class="number">100005</span> &amp;&amp; !vis[temp.state*<span class="number">2</span>]) &#123;</span><br><span class="line">			<span class="built_in">queue</span>[rear].state = temp.state * <span class="number">2</span>;</span><br><span class="line">			<span class="built_in">queue</span>[rear].step = temp.step + <span class="number">1</span>;</span><br><span class="line">			rear++;</span><br><span class="line">			vis[temp.state * <span class="number">2</span>] = <span class="number">1</span>;</span><br><span class="line">			<span class="keyword">if</span>(temp.state * <span class="number">2</span> == k) &#123;</span><br><span class="line">				<span class="keyword">return</span> temp.step + <span class="number">1</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span>  k,n;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;n,&amp;k);</span><br><span class="line">	<span class="keyword">if</span>(n &gt;= k) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,n-k);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,bfs(n,k));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2021/03/23/Catch%20That%20Cow/" data-id="ckmm10kmc0000hctm1v2lhylf" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -433,6 +434,10 @@
       <ul>
         
           <li>
+            <a href="/2021/04/18/%E4%B8%89%E5%80%BC%E6%8E%92%E5%BA%8F/">(no title)</a>
+          </li>
+        
+          <li>
             <a href="/2021/04/14/Max%20Sum/">(no title)</a>
           </li>
         
@@ -446,10 +451,6 @@
         
           <li>
             <a href="/2021/04/07/%E6%94%BE%E8%8B%B9%E6%9E%9C/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2021/04/06/java%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E6%A8%A1%E6%8B%9F%E9%85%92%E5%BA%97%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/">(no title)</a>
           </li>
         
       </ul>
